@@ -323,6 +323,16 @@ public class RunMojo
                 }
             }
 
+            if (additionalClasspathDirs != null && !additionalClasspathDirs.isEmpty()) {
+
+                for (String additionalClasspathDir : additionalClasspathDirs) {
+                    if (StringUtils.isNotBlank(additionalClasspathDir)) {
+                        DirResourceSet dirResourceSet = new DirResourceSet(context.getResources(), "/WEB-INF/classes", new File(additionalClasspathDir).getAbsolutePath(), "/");
+                        context.getResources().addPreResources(dirResourceSet);
+                    }
+                }
+            }
+
             /* Add build directories */
             getLog().debug("Adding classes resource: " + new File(project.getBuild().getOutputDirectory()).getAbsolutePath());
             DirResourceSet webinfClassesResources = new DirResourceSet(context.getResources(), "/WEB-INF/classes", new File(project.getBuild().getOutputDirectory()).getAbsolutePath(), "/") {
